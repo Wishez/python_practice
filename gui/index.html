@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Playing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" />
+</head>
+<body>
+    <main>
+        <form action="cgi-bin/cgi02.py"
+              method="post"
+              class="ui form"
+        >
+            <div class="fields">
+                <div class="ui inverted input"
+                    style="display: block;">
+                    <label for="key">Key</label>
+                    <input name="key" type="text"
+                placeholder="Key"/>
+                </div>
+                <br/>
+                <div class="ui inverted input"
+                    style="display: block;">
+                    <label for="name">Name</label>
+                    <input name="name" type="text"
+                    placeholder="Name"/>
+                </div>
+                <br/>
+                <div class="ui inverted input block"
+                    style="display: block;">
+                    <label for="age">Age</label>
+                    <input name="age" type="text"
+                    placeholder="Age"/>
+                </div>
+                <br/>
+                <div class="ui inverted input"
+                     style="display: block;">
+                    <label for="salary">Salary</label>
+                    <input name="salary" type="text"
+                    placeholder="Salary"/>
+                </div>
+                <div class="ui inverted input"
+                    style="display: block;">
+                    <label for="job">Age</label>
+                    <input name="job" type="text"
+                    placeholder="job"/>
+                </div>
+            </div>
+
+            <div class="handlers">
+                <button type="submit"
+                        class="ui button blue"
+                        value="Fetch"
+                >Получить!</button>
+
+                <button type="submit"
+                        class="ui button orange"
+                        value="Update"
+                >Записать!</button>
+
+                <button type="submit"
+                        class="ui button yellow"
+                        value="Remove"
+                >Удалить!</button>
+
+                <button type="reset"
+                        class="ui button purple"
+                >Очистить поля!</button>
+            </div>
+
+        </form>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+</body>
+</html>
