@@ -22,7 +22,7 @@ replyhtml = """
 </head>
 <body>
     <main>
-        <form action="cgi-bin/cgi02.py"
+        <form action="./cgi02.py"
               method="post"
               class="ui form"
         >
@@ -31,10 +31,10 @@ replyhtml = """
                     style="display: block;">
                     <label for="key">Key</label>
                     <input name="key" type="text"
-                placeholder="Key"/>
+                        placeholder="Key" value="%(key)s" />
                 </div>
                 <br/>
-                %FIELDS%
+                $FIELDS$
             </div>
 
             <div class="handlers">
@@ -58,7 +58,7 @@ replyhtml = """
                 >Clear fields!</button>
             </div>
         </form> 
-        %REPLY%
+        <p>$REPLY$</p>
     </main>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -82,11 +82,9 @@ fieldshtml = ''
 
 for fieldname in fieldnames:
     fieldnameUpperFirstLetter = fieldname[1].upper() + fieldname[1:]
-    fieldshtml += fieldhtml % (fieldname,
-                               fieldnameUpperFirstLetter,    # For a label
-                               (fieldname * 3))
+    fieldshtml += fieldhtml % ((fieldname,) * 5)
 
-replyhtml = replyhtml.replace('%FIELDS%', fieldshtml)
+replyhtml = replyhtml.replace('$FIELDS$', fieldshtml)
 
 def htmlize(adict):
     new = adict.copy()
@@ -127,7 +125,8 @@ def updateRecord(db, form):
     if key in db:
         record = db[key]  # изменить существующую запись
     else:
-        from ..db.person import Person  # создать/сохранить новую
+        #from sys.modules import db  # создать/сохранить новую
+        from gui.db.person import Person  # создать/сохранить новую
         record = Person(name='?', age='?')  # eval: строки должны быть
     # заключены в кавычки
     for field in fieldnames:
@@ -154,20 +153,23 @@ def executeAction(action, db, form):
     return {
         'Fetch': fetchRecord(db, form),
         'Update': updateRecord(db, form),
-        'Remove': removeRecord(db, form)
+        'Remove':  removeRecord(db, form)
     }[action]
 
 
-db = shelve.open('../db/people-shelve')
+db = shelve.open('people-shelve')
 action = form['action'].value if 'action' in form else None
 try:
     fields = executeAction(action, db, form)
+    if (action):
+        # action+='ed'
+        state = action + 'ed'
 except:
     fields = dict.fromkeys(fieldnames, '?')
-    fields['key'] = 'Missing a key or just the record doesn\'t exist. You can try an another key.'\
-
+    fields['key'] = 'Missing a key or just the record doesn\'t exist. You can try an another key.'
+    state = 'Nothing happen'
 db.close()
-
+replyhtml.replace('$REPLY$', state)
 print(replyhtml % htmlize(fields))
  #print('<div>action value is=>%s</div><br />' % form['action'].value)
 
