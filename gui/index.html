@@ -11,8 +11,8 @@
 <body>
     <main>
         <form action="cgi-bin/cgi02.py"
-              method="post"
               class="ui form"
+              enctype="multipart/form-data"
         >
             <div class="fields">
                 <div class="ui inverted input"
@@ -50,26 +50,27 @@
                 </div>
             </div>
 
-            <div class="handlers">
                 <button type="submit"
                         class="ui button blue"
                         value="Fetch"
+                        name=action
                 >Получить!</button>
 
                 <button type="submit"
                         class="ui button orange"
                         value="Update"
+                        name=action
                 >Записать!</button>
 
                 <button type="submit"
                         class="ui button yellow"
                         value="Remove"
+                        name=action
                 >Удалить!</button>
 
                 <button type="reset"
                         class="ui button purple"
                 >Очистить поля!</button>
-            </div>
 
         </form>
     </main>

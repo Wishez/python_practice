@@ -6,8 +6,7 @@ import html.parser, cgi, shelve, os, sys
 fieldnames =('name', 'age', 'salary', 'job')
 form = cgi.FieldStorage()
 print('Content-type: text/html\n')
-sys.path.insert(0, os.getcwd())
-
+sys.path.append(os.getcwd())
 
 
 replyhtml = """
@@ -23,7 +22,7 @@ replyhtml = """
 <body>
     <main>
         <form action="./cgi02.py"
-              method="post"
+              method="GET"
               class="ui form"
         >
             <div class="fields">
@@ -58,7 +57,6 @@ replyhtml = """
                 >Clear fields!</button>
             </div>
         </form> 
-        <p>$REPLY$</p>
     </main>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -126,11 +124,11 @@ def updateRecord(db, form):
         record = db[key]  # изменить существующую запись
     else:
         #from sys.modules import db  # создать/сохранить новую
-        from gui.db.person import Person  # создать/сохранить новую
+        from db.person import Person  # создать/сохранить новую
         record = Person(name='?', age='?')  # eval: строки должны быть
     # заключены в кавычки
     for field in fieldnames:
-        setattr(record, field, eval(form[field].value))
+        setattr(record, field, eval(repr(form[field].value)))
     db[key] = record
     fields = record.__dict__
     fields['key'] = key
@@ -151,26 +149,26 @@ def removeRecord(db, form):
 
 def executeAction(action, db, form):
     return {
-        'Fetch': fetchRecord(db, form),
-        'Update': updateRecord(db, form),
-        'Remove':  removeRecord(db, form)
+        'Fetch': lambda datebase=db, cgiform=form: fetchRecord(datebase, cgiform),
+        'Update': lambda datebase=db, cgiform=form: updateRecord(datebase, cgiform),
+        'Remove': lambda datebase=db, cgiform=form: removeRecord(datebase, cgiform)
     }[action]
 
 
 db = shelve.open('people-shelve')
 action = form['action'].value if 'action' in form else None
-try:
+if action:
     fields = executeAction(action, db, form)
-    if (action):
-        # action+='ed'
-        state = action + 'ed'
-except:
+    fields = fields()
+    state = 'You did it. Yeh...'
+else:
     fields = dict.fromkeys(fieldnames, '?')
     fields['key'] = 'Missing a key or just the record doesn\'t exist. You can try an another key.'
     state = 'Nothing happen'
 db.close()
-replyhtml.replace('$REPLY$', state)
+
+print(state)
+
 print(replyhtml % htmlize(fields))
- #print('<div>action value is=>%s</div><br />' % form['action'].value)
 
 
