@@ -1,4 +1,4 @@
-from gui.db.person import Person
+from .person import Person
 
 class Manager(Person):
     def increaceSalary(self, percent, bonus=0.1):

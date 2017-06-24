@@ -22,7 +22,6 @@ replyhtml = """
 <body>
     <main>
         <form action="./cgi02.py"
-              method="GET"
               class="ui form"
         >
             <div class="fields">
@@ -39,17 +38,20 @@ replyhtml = """
             <div class="handlers">
                 <button type="submit"
                         class="ui button blue"
+                        name=action
                         value="Fetch"
                 >Fetch!</button>
 
                 <button type="submit"
                         class="ui button orange"
+                        name=action
                         value="Update"
                 >Update!</button>
 
                 <button type="submit"
                         class="ui button yellow"
                         value="Remove"
+                        name=action
                 >Remove!</button>
 
                 <button type="reset"
@@ -94,6 +96,7 @@ def htmlize(adict):
 def fetchRecord(db, form):
     try:
         key = form['key'].value
+        print(key)
         record = db[key]
         fields = record.__dict__
         fields['key'] = key
@@ -124,7 +127,7 @@ def updateRecord(db, form):
         record = db[key]  # изменить существующую запись
     else:
         #from sys.modules import db  # создать/сохранить новую
-        from db.person import Person  # создать/сохранить новую
+        from classes.person import Person  # создать/сохранить новую
         record = Person(name='?', age='?')  # eval: строки должны быть
     # заключены в кавычки
     for field in fieldnames:

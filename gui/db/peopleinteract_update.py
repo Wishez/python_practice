@@ -1,6 +1,6 @@
 import shelve
 
-from gui.db.person import Person
+from gui.classes.person import Person
 
 fieldnames = ('name', 'age', 'job', 'salary')
 

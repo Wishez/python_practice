@@ -3,7 +3,7 @@ import pprint
 
 from manager import Manager
 
-from gui.db.person import Person
+from gui.classes.person import Person
 
 # tables
 
