@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
+import sys
 from socket import *
-
+import pickle
 myHost = ''
 myPort = 50007
 
@@ -12,9 +13,22 @@ sockobj.listen(5)                       # Не более 5 ожидающих �
 while True:
     connection, address = sockobj.accept()
     print('Server connected by', address)
-
+    obj = {
+        'firstReceiveData': '',
+        'fullChangedData': 'You sent - ',
+        'lengthData': 0
+    }
     while True:
         data = connection.recv(1024) # Читаем строку из сокета
-        if not data: break
-        connection.send(b'Echo=>' + data)
+        data = str(data)
+        if not data:break
+        if obj['lengthData'] == 0:
+            obj['firstReceiveData'] = data
+        obj['fullChangedData'] += data
+        obj['lengthData'] += 1
+
+    connection.send(pickle.dumps(obj))
     connection.close()
+
+#cd dev/python_practice/sockets
+# python server-
