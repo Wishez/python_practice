@@ -1,8 +1,9 @@
+# -*- encoding: utf-8 -*-
 import sys
 from socket import *
 
 serverHost = '188.225.32.103'
-serverPort = 50007
+serverPort = 55304
 
 message = b"It's message sending to a server"
 
