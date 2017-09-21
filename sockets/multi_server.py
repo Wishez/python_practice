@@ -46,9 +46,9 @@ if __name__ == '__main__':
 	else:
 		cs = ConnectSocket(sys.argv[1])
 		threads = []
-		for x in range(5):
+		for x in range(50):
 			time.sleep(0.5)
-			thread = Thread(target=cs, args=(sys.argv[2],))
+			thread = Thread(target=cs, args=(sys.argv[2:],))
 			threads.append(thread)
 			thread.start()
 

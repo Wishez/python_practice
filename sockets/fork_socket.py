@@ -2,8 +2,8 @@
 import os, sys, time
 from socket import *
 from threading import Thread
-from signal import signal, SIG_IGN, SIGCHLD
-PORT = 55304
+#from signal import signal, SIG_IGN, SIGCHLD
+PORT = 50000
 
 class ForkSocket():
 	def __init__(self, host='', port=PORT, timeout=5.0):
@@ -62,7 +62,7 @@ class ConnectSocket():
 		self.sock = socket(AF_INET, SOCK_STREAM)
 
 		self.sock.connect((self.host, self.port))
-		self.sock.send(b'%s' % text)
+		self.sock.send(('%s' % text).encode())
 		while True:
 			data = self.sock.recv(1024)
 			if not data: break
@@ -79,8 +79,8 @@ if __name__ == '__main__':
 		cs = ConnectSocket(sys.argv[1])
 		threads = []
 		for x in range(60):
-			time.sleep(0.5)
-			thread = Thread(target=cs, args=(sys.argv[2],))
+			# time.sleep(0.5)
+			thread = Thread(target=cs, args=(sys.argv[2:],))
 			threads.append(thread)
 			thread.start()
 
