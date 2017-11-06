@@ -83,8 +83,9 @@ b = Idea()
 c = Boaring()
 
 
-print('c is b: %s, a is c: %s, b is a: %s.' % (c is b, a is c, b is a))
 
 a.buidCastle()
 b.buidCastle()
 c.buidCastle()
+
+print('c is b: %s, a is c: %s, b is a: %s.' % (c is b, a is c, b is a))

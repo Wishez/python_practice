@@ -1,4 +1,4 @@
-from socket.file.getfile import FileGetter
+from getfile import FileGetter
 from tkinter import *
 from tkinter.messagebox import showinfo
 

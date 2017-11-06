@@ -39,7 +39,7 @@ class FileGetter:
 			data = self.cl_sock.recv(blksz)
 			if not data: break
 			file.write(data)
-		cl_sock.close()
+		self.cl_sock.close()
 		file.close()
 
 		print('Client got', filename, 'at', self.now())
