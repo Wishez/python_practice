@@ -8,7 +8,7 @@ if len(sys.argv) > 1:
 
 password = getpass.getpass('Pswd?')
 
-remoteaddr = 'ftp://root:%s@194.67.216.135/%s;type=i' % (password, filename)
+remoteaddr = 'ftp://root:%s@web-renome.ru/%s;type=i' % (password, filename)
 print('Downloading', remoteaddr)
 
 # urllib.request.urlretreive(remoteaddr, filename)
